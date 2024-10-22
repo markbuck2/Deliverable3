@@ -1,0 +1,110 @@
+/* Base Mobile-First Styles */
+
+/* Use reset.css file for browser consistency */
+@import url('reset.css');
+
+/* Typography */
+body {
+    font-family: 'Helvetica Neue', sans-serif;
+    padding: 20px;
+    background-color: #f0f4f8;
+    color: #333;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* Layout */
+header, footer, main {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h1, h2, h3 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+p {
+    margin-bottom: 20px;
+}
+
+/* Buttons */
+button {
+    padding: 12px 20px;
+    background-color: #28a745;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+/* Links */
+a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #0056b3;
+}
+
+/* Images */
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+header, footer, main {
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Media Queries for Tablet Screens */
+@media (min-width: 768px) {
+    body {
+        padding: 40px;
+    }
+
+    main {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    h1 {
+        font-size: 2.5em;
+    }
+}
+
+/* Media Queries for Desktop Screens */
+@media (min-width: 1024px) {
+    header, footer {
+        text-align: left;
+        padding: 0 40px;
+    }
+
+    main {
+        width: 70%;
+    }
+
+    h1 {
+        font-size: 3em;
+    }
+
+    p {
+        font-size: 18px;
+    }
+}
