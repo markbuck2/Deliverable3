@@ -14,7 +14,7 @@ To install and run this project, run the following commands in a VSCode terminal
 
 ```
 ```bash
-  cd deliverable3/
+  cd Deliverable3/
 ```
 ```bash
   python3 csv_parser.py
