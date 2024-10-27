@@ -1,110 +1,183 @@
-/* Base Mobile-First Styles */
-
-/* Use reset.css file for browser consistency */
 @import url('reset.css');
 
-/* Typography */
+/* This is the Default light theme */
+:root {
+    --background-color: #f0f4f8;
+    --text-color: #333;
+    --header-background-color: #ffffff;
+    --table-border-color: black; /* Black border for light mode to contrast */
+    --table-row-odd: #f0f0f0;
+    --table-row-even: #fff;
+    --link-color: #000000;
+    --link-visited-color: #fe0000;
+    --link-active-color: #003f7f;
+    --button-background: #004793;
+    --button-hover: #990000;
+    --button-text-color: white;
+}
+
+/* Dark mode */
+body.dark-mode {
+    --background-color: #121212;
+    --text-color: #f0f0f0;
+    --header-background-color: #1e1e1e;
+    --table-border-color: #f0f0f0; /* Lighter border for dark mode */
+    --table-row-odd: #1e1e1e;
+    --table-row-even: #333;
+    --link-color: #80d0ff;
+    --link-visited-color: #66b3ff;
+    --link-active-color: #0056ad;
+    --button-background: #6b003e;
+    --button-hover: #ff1493;
+    --button-text-color: white;
+}
+
+/* Apply color variables */
 body {
-    font-family: 'Helvetica Neue', sans-serif;
-    padding: 20px;
-    background-color: #f0f4f8;
-    color: #333;
-    font-size: 16px;
-    line-height: 1.6;
+    background-color: var(--background-color);
+    color: var(--text-color);
 }
 
-/* Layout */
 header, footer, main {
-    width: 100%;
-    text-align: center;
-    margin-bottom: 20px;
+    background-color: var(--header-background-color);
 }
 
-h1, h2, h3 {
-    margin-bottom: 20px;
-    color: #333;
+/* Table styles with dynamic border color */
+table, th, td {
+    border: 2px solid var(--table-border-color); /* Border color depends on mode */
 }
 
-p {
-    margin-bottom: 20px;
+table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
 }
 
-/* Buttons */
-button {
-    padding: 12px 20px;
-    background-color: #28a745;
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+/* Alternating row colors */
+tbody tr:nth-child(odd) {
+    background-color: var(--table-row-odd);
+}
+
+tbody tr:nth-child(even) {
+    background-color: var(--table-row-even);
+}
+
+/* Dark Mode Toggle Button */
+.mode-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    margin: 10px;
+    padding: 10px 15px;
+    background-color: var(--button-background);
+    color: var(--button-text-color);
     border: none;
-    color: white;
-    font-size: 16px;
     cursor: pointer;
-    border-radius: 4px;
+    border-radius: 5px;
+    z-index: 1000;
     transition: background-color 0.3s ease;
 }
 
-button:hover {
-    background-color: #218838;
+.mode-toggle:hover {
+    background-color: var(--button-hover);
 }
 
-/* Links */
-a {
-    color: #007bff;
-    text-decoration: none;
-    transition: color 0.3s ease;
+/* Typography, tried to incorporate clamp too*/
+body {
+    font-family: 'Open Sans', sans-serif;
+    padding: 20px;
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    line-height: 1.6;
 }
 
-a:hover {
-    color: #0056b3;
+h1, h2, h3 {
+    font-family: 'Montserrat', sans-serif;
+    margin-bottom: 20px;
+    color: var(--text-color);
+    font-size: clamp(1.5rem, 2vw, 2.5rem);
 }
 
-/* Images */
+/* Circular athlete profile images */
 img {
+    display: block;
+    margin: 20px auto;
     max-width: 100%;
     height: auto;
-    border-radius: 8px;
+    border-radius: 50%;
+    object-fit: cover;
+    width: 150px;
+    height: 150px;
+    border: 3px solid #1282fa;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Animations */
-@keyframes fadeIn {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
+/* Animations for first, second, and third place */
+@keyframes highlightGold {
+    0% { background-color: transparent; }
+    100% { background-color: #FFD700; }
 }
 
-header, footer, main {
-    animation: fadeIn 1s ease-in-out;
+@keyframes highlightSilver {
+    0% { background-color: transparent; }
+    100% { background-color: #C0C0C0; }
 }
 
-/* Media Queries for Tablet Screens */
-@media (min-width: 768px) {
-    body {
-        padding: 40px;
-    }
+@keyframes highlightBronze {
+    0% { background-color: transparent; }
+    100% { background-color: #944b01; }
+}
 
-    main {
-        width: 90%;
-        margin: 0 auto;
-    }
+.first-place {
+    animation: highlightGold 3s ease forwards;
+    color: #333;
+}
 
-    h1 {
-        font-size: 2.5em;
+.second-place {
+    animation: highlightSilver 3s ease forwards;
+    color: #333;
+}
+
+.third-place {
+    animation: highlightBronze 3s ease forwards;
+    background-color: #CD7F32;
+    color: #ffffff;
+}
+
+/* Reduced motion: Disable animations if the user prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none;
     }
 }
 
-/* Media Queries for Desktop Screens */
-@media (min-width: 1024px) {
-    header, footer {
-        text-align: left;
-        padding: 0 40px;
-    }
+/* Link styling for light mode */
+a.Welcome.Page {
+    color: var(--link-color);
+    text-decoration: underline;
+}
 
-    main {
-        width: 70%;
-    }
+a.Welcome.Page:visited {
+    color: var(--link-visited-color);
+}
 
-    h1 {
-        font-size: 3em;
-    }
+a.Welcome.Page:active {
+    color: var(--link-active-color);
+}
 
-    p {
-        font-size: 18px;
-    }
+/* Dark mode link styling */
+body.dark-mode a.Welcome.Page {
+    color: var(--link-color);
+}
+
+body.dark-mode a.Welcome.Page:visited {
+    color: var(--link-visited-color);
+}
+
+body.dark-mode a.Welcome.Page:active {
+    color: var(--link-active-color);
 }
