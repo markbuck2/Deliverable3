@@ -5,7 +5,7 @@
     --background-color: #f0f4f8;
     --text-color: #333;
     --header-background-color: #ffffff;
-    --table-border-color: black; /* Black border for light mode to contrast */
+    --table-border-color: black;
     --table-row-odd: #f0f0f0;
     --table-row-even: #fff;
     --link-color: #000000;
@@ -21,7 +21,7 @@ body.dark-mode {
     --background-color: #121212;
     --text-color: #f0f0f0;
     --header-background-color: #1b1a1a;
-    --table-border-color: #f0f0f0; /* Lighter border for dark mode */
+    --table-border-color: #f0f0f0;
     --table-row-odd: #fffefe;
     --table-row-even: #ffffff;
     --link-color: #80d0ff;
@@ -36,15 +36,46 @@ body.dark-mode {
 body {
     background-color: var(--background-color);
     color: var(--text-color);
+    font-family: 'Open Sans', sans-serif;
+    padding: 20px;
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    line-height: 1.6;
 }
 
 header, footer, main {
     background-color: var(--header-background-color);
 }
 
+h1, h2, h3 {
+    font-family: 'Montserrat', sans-serif;
+    margin-bottom: 20px;
+    color: var(--text-color);
+    font-size: clamp(1.5rem, 2vw, 2.5rem);
+}
+
+/* Navigation Bar Styling */
+nav {
+    background-color: var(--header-background-color);
+    padding: 15px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+nav a {
+    color: var(--link-color);
+    margin: 0 10px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: var(--link-active-color);
+    text-decoration: underline;
+}
+
 /* Table styles with dynamic border color */
 table, th, td {
-    border: 2px solid var(--table-border-color); /* Border color depends on mode */
+    border: 2px solid var(--table-border-color);
 }
 
 table {
@@ -58,7 +89,6 @@ th, td {
     text-align: left;
 }
 
-/* Alternating row colors */
 tbody tr:nth-child(odd) {
     background-color: var(--table-row-odd);
 }
@@ -85,21 +115,6 @@ tbody tr:nth-child(even) {
 
 .mode-toggle:hover {
     background-color: var(--button-hover);
-}
-
-/* Typography, tried to incorporate clamp too*/
-body {
-    font-family: 'Open Sans', sans-serif;
-    padding: 20px;
-    font-size: clamp(1rem, 1.5vw, 1.2rem);
-    line-height: 1.6;
-}
-
-h1, h2, h3 {
-    font-family: 'Montserrat', sans-serif;
-    margin-bottom: 20px;
-    color: var(--text-color);
-    font-size: clamp(1.5rem, 2vw, 2.5rem);
 }
 
 /* Circular athlete profile images */
