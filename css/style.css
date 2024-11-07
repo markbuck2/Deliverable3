@@ -20,10 +20,10 @@
 body.dark-mode {
     --background-color: #121212;
     --text-color: #f0f0f0;
-    --header-background-color: #1e1e1e;
+    --header-background-color: #1b1a1a;
     --table-border-color: #f0f0f0; /* Lighter border for dark mode */
-    --table-row-odd: #1e1e1e;
-    --table-row-even: #333;
+    --table-row-odd: #fffefe;
+    --table-row-even: #ffffff;
     --link-color: #80d0ff;
     --link-visited-color: #66b3ff;
     --link-active-color: #0056ad;
@@ -129,7 +129,7 @@ img {
 
 @keyframes highlightBronze {
     0% { background-color: transparent; }
-    100% { background-color: #944b01; }
+    100% { background-color: #ce8f50; }
 }
 
 .first-place {
@@ -144,8 +144,8 @@ img {
 
 .third-place {
     animation: highlightBronze 3s ease forwards;
-    background-color: #CD7F32;
-    color: #ffffff;
+    background-color: hsl(30, 100%, 19%);
+    color: #333;
 }
 
 /* Reduced motion: Disable animations if the user prefers reduced motion */
@@ -180,4 +180,26 @@ body.dark-mode a.Welcome.Page:visited {
 
 body.dark-mode a.Welcome.Page:active {
     color: var(--link-active-color);
+}
+
+/* Table header indicators for sorting */
+th {
+    cursor: pointer;
+    position: relative;
+}
+
+th.sort-asc::after {
+    content: "↑";
+    position: absolute;
+    right: 10px;
+    font-size: 0.8em;
+    color: var(--text-color);
+}
+
+th.sort-desc::after {
+    content: "↓";
+    position: absolute;
+    right: 10px;
+    font-size: 0.8em;
+    color: var(--text-color);
 }
