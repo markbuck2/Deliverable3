@@ -124,11 +124,11 @@ def generate_html_content(title, file_name, team_data, individual_data):
         file.write(html_content)
     print(f"{file_name} has been created successfully.")
 
-# Generate five results HTML pages with varied content
-titles = ["Overall Results", "Top Teams", "Top Individuals", "Team Highlights", "Athlete Spotlights"]
-file_names = ["results_overall.html", "top_teams.html", "top_individuals.html", "team_highlights.html", "athlete_spotlights.html"]
+# Generate four results HTML pages with varied content 
+titles = ["Overall Results", "Top Teams", "Top Individuals", "Team Highlights"]
+file_names = ["results_overall.html", "top_teams.html", "top_individuals.html", "team_highlights.html"]
 
-for i in range(5):
+for i in range(4):
     team_data = team_scores[:i + 1] if i < 3 else team_scores  # Different team data for each file
     individual_data = individual_results[:i + 1] if i < 3 else individual_results  # Different individual data for each file
     generate_html_content(titles[i], file_names[i], team_data, individual_data)
