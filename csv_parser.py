@@ -1,41 +1,75 @@
 import os
 
-# Placeholder paths for CSV and images
-file_path = 'SEC_Jamboree_1_Womens_5000_Meters_Junior_Varsity_24.csv'
+# Paths for CSV files and image directory
+file_path_grade_9 = 'SEC_Jamboree_1_Womens_5000_Meters_Junior_Varsity_24.csv'
+file_path_men = '37th_Early_Bird_Open_Mens_5000_Meters_HS_Open_5K_24.csv'
 image_dir = 'images'
 
-# Placeholder team and individual data (Example data for illustration)
-team_scores = [
-    ["1", "Ypsilanti Lincoln", "22"],
-    ["2", "Saline", "73"],
-    ["3", "Dexter", "81"],
-    ["4", "Ann Arbor Pioneer", "84"],
-    ["5", "Ann Arbor Skyline", "134"]
-]
+# Placeholder data for team scores and individual results
+team_scores_grade_9 = []
+individual_results_grade_9 = []
+team_scores_men = []
+individual_results_men = []
 
-individual_results = [
-    ["1", "11", "Riley Provost", "https://www.athletic.net/athlete/14164024/cross-country", "23:15.00", "Saline", "https://www.athletic.net/athlete/14164024/cross-country", "14164024.jpg"],
-    ["2", "9", "Claire Steinbrecher", "https://www.athletic.net/athlete/21411167/cross-country", "23:18.50", "Dexter", "https://www.athletic.net/athlete/21411167/cross-country", "21411167.jpg"],
-    ["3", "11", "Mahalia Staton", "https://www.athletic.net/athlete/22262892/cross-country", "23:20.50", "Saline", "https://www.athletic.net/athlete/22262892/cross-country", "22262892.jpg"],
-    ["4", "10", "Julianna Richards", "https://www.athletic.net/athlete/19005084/cross-country", "23:32.50", "Dexter", "https://www.athletic.net/athlete/19005084/cross-country", "19005084.jpg"],
-    ["5", "12", "Elizabeth Thibeault", "https://www.athletic.net/athlete/18817762/cross-country", "23:34.00", "Saline", "https://www.athletic.net/athlete/18817762/cross-country", "18817762.jpg"]
-]
+# Function to read CSV data and store in lists
+def read_csv(file_path, team_scores, individual_results):
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+    
+    in_team_scores = False
+    in_individual_results = False
 
-# Function to generate HTML content for each page with a navigation bar
-def generate_html_content(title, file_name, team_data, individual_data):
-    # Navigation bar HTML with link back to results.html
+    for line in lines:
+        line = line.strip()
+        if line.startswith("Place,Team,Score"):
+            in_team_scores = True
+            in_individual_results = False
+            continue
+        elif line.startswith("Place,Grade,Name,Athlete Link,Time,Team,Team Link,Profile Pic"):
+            in_team_scores = False
+            in_individual_results = True
+            continue
+        elif not line:
+            continue
+
+        data = line.split(',')
+        
+        if in_team_scores and len(team_scores) < 3:
+            if len(data) >= 3 and all(data[:3]):
+                team_scores.append(data[:3])
+        elif in_individual_results:
+            if len(data) >= 8 and all(data[:8]):
+                individual_results.append(data[:8])
+
+# Read data for both grade 9 and men's events
+read_csv(file_path_grade_9, team_scores_grade_9, individual_results_grade_9)
+read_csv(file_path_men, team_scores_men, individual_results_men)
+
+# Filter Grade 9 and Grade 10 Results
+grade_9_results = [result for result in individual_results_grade_9 if result[1].strip() == "9"]
+grade_10_results = [result for result in individual_results_grade_9 if result[1].strip() == "10"]
+
+# Combine individual results for top 10 athletes across both datasets and sort by time
+combined_individual_results = individual_results_grade_9 + individual_results_men
+combined_individual_results = sorted(combined_individual_results, key=lambda x: x[4])  # Assuming time is at index 4
+
+# Get the top 10 athletes
+top_10_athletes = combined_individual_results[:10]
+
+# Function to generate HTML content for a page
+def generate_html_content(title, file_name, team_data, individual_data, include_table=False, include_top_results_heading=True):
     nav_bar = """
     <nav>
-        <a href="results.html">Main Results</a> |
-        <a href="results_overall.html">Overall Results</a> |
-        <a href="top_teams.html">Top Teams</a> |
-        <a href="top_individuals.html">Top Individuals</a> |
-        <a href="team_highlights.html">Team Highlights</a> |
+        <a href="results.html">Women's Results</a> |
+        <a href="mens_results.html">Men's Results</a> |
+        <a href="results_overall.html">Top 10 Athletes Across All Genders</a> |
+        <a href="grade_9_results.html">Grade 9 Results</a> |
+        <a href="grade_10_results.html">Grade 10 Results</a> |
         <a href="index.html">Welcome Page</a>
     </nav>
     """
 
-    # Main HTML structure with navigation included
+    # Main HTML structure without <h1> header to prevent duplication
     html_content = f"""
 <!DOCTYPE html>
 <html lang="en">
@@ -46,17 +80,17 @@ def generate_html_content(title, file_name, team_data, individual_data):
    <title>{title}</title>
 </head>
 <body>
-   <header id="main-header">
-       <h1>{title}</h1>
-   </header>
-
    {nav_bar}
 
    <main id="content">
        <section id="event-title">
-           <h2>SEC Jamboree #1 5000 Meters Junior Varsity</h2>
+           <h2>{title}</h2>
        </section>
+    """
 
+    # Include the team scores table only if specified
+    if include_table:
+        html_content += """
        <section id="team-scores">
            <h2>Team Scores</h2>
            <table>
@@ -68,25 +102,33 @@ def generate_html_content(title, file_name, team_data, individual_data):
                    </tr>
                </thead>
                <tbody>
-    """
-    for index, score in enumerate(team_data):
-        css_class = ['first-place', 'second-place', 'third-place'][index] if index < 3 else ''
-        if len(score) >= 3:
-            html_content += f"""
-                    <tr class="{css_class}">
-                        <td>{score[0]}</td>
-                        <td>{score[1]}</td>
-                        <td>{score[2]}</td>
-                    </tr>
-            """
+        """
+        for index, score in enumerate(team_data):
+            css_class = ['first-place', 'second-place', 'third-place'][index] if index < 3 else ''
+            if len(score) >= 3:
+                html_content += f"""
+                        <tr class="{css_class}">
+                            <td>{score[0]}</td>
+                            <td>{score[1]}</td>
+                            <td>{score[2]}</td>
+                        </tr>
+                """
 
-    html_content += """
+        html_content += """
                </tbody>
            </table>
        </section>
+    """
 
+    # Include the "Top Results" heading only if specified
+    if include_top_results_heading:
+        html_content += """
        <section id="individual-results">
            <h2>Top Results</h2>
+    """
+    else:
+        html_content += """
+       <section id="individual-results">
     """
 
     for index, result in enumerate(individual_data):
@@ -119,19 +161,13 @@ def generate_html_content(title, file_name, team_data, individual_data):
 </body>
 </html>
     """
-    # Write the HTML content to the specified file
     with open(file_name, 'w') as file:
         file.write(html_content)
     print(f"{file_name} has been created successfully.")
 
-# Generate four results HTML pages with varied content 
-titles = ["Overall Results", "Top Teams", "Top Individuals", "Team Highlights"]
-file_names = ["results_overall.html", "top_teams.html", "top_individuals.html", "team_highlights.html"]
-
-for i in range(4):
-    team_data = team_scores[:i + 1] if i < 3 else team_scores  # Different team data for each file
-    individual_data = individual_results[:i + 1] if i < 3 else individual_results  # Different individual data for each file
-    generate_html_content(titles[i], file_names[i], team_data, individual_data)
-
-# Generate the additional results.html page with navigation links
-generate_html_content("Results Page", "results.html", team_scores[:3], individual_results[:3])
+# Generate HTML pages with the updated nav bar and titles
+generate_html_content("Women's Results", "results.html", team_scores_grade_9[:3], individual_results_grade_9[:3], include_table=True)
+generate_html_content("Top 10 Athletes Across All Genders", "results_overall.html", [], top_10_athletes, include_top_results_heading=False)
+generate_html_content("Grade 9 Results", "grade_9_results.html", [], grade_9_results, include_top_results_heading=False)
+generate_html_content("Grade 10 Results", "grade_10_results.html", [], grade_10_results, include_top_results_heading=False)
+generate_html_content("Men's Results", "mens_results.html", team_scores_men, individual_results_men, include_table=True)
