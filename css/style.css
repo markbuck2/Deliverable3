@@ -166,9 +166,11 @@ img {
 /* Reduced motion: Disable animations if the user prefers reduced motion */
 @media (prefers-reduced-motion: reduce) {
     * {
-        animation: none;
+        animation: none !important;
+        transition: none !important;
     }
 }
+
 
 /* Link styling for light mode */
 a.Welcome.Page {
