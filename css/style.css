@@ -8,8 +8,9 @@
     --table-border-color: black;
     --table-row-odd: #f0f0f0;
     --table-row-even: #fff;
-    --link-color: #000000;
-    --link-visited-color: #fe0000;
+    --link-color: #000000; /* Black links for light mode */
+    --link-visited-color: #000000; /* Black for visited links in light mode */
+    --link-hover-color: #ff0066; /* Pink color on hover for contrast */
     --link-active-color: #003f7f;
     --button-background: #004793;
     --button-hover: #990000;
@@ -24,9 +25,10 @@ body.dark-mode {
     --table-border-color: #f0f0f0;
     --table-row-odd: #fffefe;
     --table-row-even: #ffffff;
-    --link-color: #80d0ff;
+    --link-color: #80d0ff; /* Light blue links for dark mode */
     --link-visited-color: #66b3ff;
-    --link-active-color: #0056ad;
+    --link-hover-color: #ff1493; /* Bright pink on hover for dark mode */
+    --link-active-color: #14e28c;
     --button-background: #6b003e;
     --button-hover: #ff1493;
     --button-text-color: white;
@@ -64,13 +66,30 @@ nav {
 nav a {
     color: var(--link-color);
     margin: 0 10px;
-    text-decoration: none;
+    text-decoration: none; /* Remove underline for nav links */
     font-weight: bold;
 }
 
 nav a:hover {
-    color: var(--link-active-color);
+    color: var(--link-hover-color);
+}
+
+/* General Link Styling (outside nav) */
+a {
+    color: var(--link-color);
     text-decoration: underline;
+}
+
+a:visited {
+    color: var(--link-visited-color);
+}
+
+a:hover {
+    color: var(--link-hover-color); /* Apply hover color for general links */
+}
+
+a:active {
+    color: var(--link-active-color);
 }
 
 /* Table styles with dynamic border color */
@@ -159,7 +178,6 @@ img {
 
 .third-place {
     animation: highlightBronze 3s ease forwards;
-    background-color: hsl(30, 100%, 19%);
     color: #333;
 }
 
@@ -171,31 +189,20 @@ img {
     }
 }
 
-
-/* Link styling for light mode */
-a.Welcome.Page {
-    color: var(--link-color);
-    text-decoration: underline;
-}
-
-a.Welcome.Page:visited {
-    color: var(--link-visited-color);
-}
-
-a.Welcome.Page:active {
-    color: var(--link-active-color);
-}
-
-/* Dark mode link styling */
-body.dark-mode a.Welcome.Page {
+/* Link styling specific to dark mode */
+body.dark-mode a {
     color: var(--link-color);
 }
 
-body.dark-mode a.Welcome.Page:visited {
+body.dark-mode a:visited {
     color: var(--link-visited-color);
 }
 
-body.dark-mode a.Welcome.Page:active {
+body.dark-mode a:hover {
+    color: var(--link-hover-color); /* Use hover color in dark mode */
+}
+
+body.dark-mode a:active {
     color: var(--link-active-color);
 }
 
