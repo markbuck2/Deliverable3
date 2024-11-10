@@ -52,7 +52,7 @@ grade_10_results = [result for result in individual_results_grade_9 if result[1]
 # Select the top 10 athletes across all genders based on time
 top_10_results = sorted(individual_results_grade_9 + individual_results_men, key=lambda x: float(x[4].replace(':', '')))[:10]
 
-# Function to generate HTML content for a page
+# This is my function that generates HTML content for the pages
 def generate_html_content(title, file_name, team_data, individual_data, max_individual_results=None):
     nav_bar = """
     <nav>
@@ -87,7 +87,7 @@ def generate_html_content(title, file_name, team_data, individual_data, max_indi
        </section>
     """
 
-    # Add team scores table only for pages that have team data
+    # Added team scores table only for pages that have team data such as mens and womens
     if team_data:
         html_content += """
        <section id="team-scores">
@@ -125,7 +125,7 @@ def generate_html_content(title, file_name, team_data, individual_data, max_indi
            <h2>Top Results</h2>
     """
 
-    # Limit the number of individual results displayed if max_individual_results is set
+    # Limited the number of individual results displayed if max_individual_results is set. This was to not overload the user with data.
     for index, result in enumerate(individual_data[:max_individual_results] if max_individual_results else individual_data):
         if len(result) >= 7:
             athlete_name = result[2]
@@ -152,8 +152,7 @@ def generate_html_content(title, file_name, team_data, individual_data, max_indi
    <footer id="main-footer">
        <p>&copy; 2024 Client Project - All rights reserved.</p>
    </footer>
-   <button id="dark-mode-toggle" class="mode-toggle">Toggle Dark Mode</button>
-
+   
    <script src="js/script.js"></script>
 </body>
 </html>
