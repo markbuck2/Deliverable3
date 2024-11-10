@@ -48,14 +48,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Dark mode toggle functionality
-    const darkModeToggle = document.getElementById("dark-mode-toggle");
-    if (darkModeToggle) {
-        darkModeToggle.addEventListener("click", () => {
-            document.body.classList.toggle("dark-mode");
-        });
-    }
-
     // Hover effect to expand images
     document.querySelectorAll("img").forEach((img) => {
         img.addEventListener("mouseenter", () => {

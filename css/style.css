@@ -1,6 +1,6 @@
 @import url('reset.css');
 
-/* This is the Default light theme */
+/* Default light theme variables */
 :root {
     --background-color: #f0f4f8;
     --text-color: #333;
@@ -9,7 +9,7 @@
     --table-row-odd: #f0f0f0;
     --table-row-even: #fff;
     --link-color: #000000; /* Black links for light mode */
-    --link-visited-color: #000000; /* Black for visited links in light mode */
+    --link-visited-color: #000000;
     --link-hover-color: #ff0066; /* Pink color on hover for contrast */
     --link-active-color: #003f7f;
     --button-background: #004793;
@@ -17,24 +17,26 @@
     --button-text-color: white;
 }
 
-/* Dark mode */
-body.dark-mode {
-    --background-color: #121212;
-    --text-color: #f0f0f0;
-    --header-background-color: #1b1a1a;
-    --table-border-color: #f0f0f0;
-    --table-row-odd: #fffefe;
-    --table-row-even: #ffffff;
-    --link-color: #80d0ff; /* Light blue links for dark mode */
-    --link-visited-color: #66b3ff;
-    --link-hover-color: #ff1493; /* Bright pink on hover for dark mode */
-    --link-active-color: #14e28c;
-    --button-background: #6b003e;
-    --button-hover: #ff1493;
-    --button-text-color: white;
+/* Dark mode using system preference */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background-color: #121212;
+        --text-color: #f0f0f0;
+        --header-background-color: #1b1a1a;
+        --table-border-color: #f0f0f0;
+        --table-row-odd: #fffefe;
+        --table-row-even: #ffffff;
+        --link-color: #80d0ff;
+        --link-visited-color: #66b3ff;
+        --link-hover-color: #ff1493; /* Bright pink for contrast */
+        --link-active-color: #14e28c;
+        --button-background: #6b003e;
+        --button-hover: #ff1493;
+        --button-text-color: white;
+    }
 }
 
-/* Apply color variables */
+/* Apply color variables to elements */
 body {
     background-color: var(--background-color);
     color: var(--text-color);
@@ -74,7 +76,7 @@ nav a:hover {
     color: var(--link-hover-color);
 }
 
-/* General Link Styling (outside nav) */
+/* General Link Styling */
 a {
     color: var(--link-color);
     text-decoration: underline;
@@ -85,14 +87,14 @@ a:visited {
 }
 
 a:hover {
-    color: var(--link-hover-color); /* Apply hover color for general links */
+    color: var(--link-hover-color);
 }
 
 a:active {
     color: var(--link-active-color);
 }
 
-/* Table styles with dynamic border color */
+/* Table styling */
 table, th, td {
     border: 2px solid var(--table-border-color);
 }
@@ -116,24 +118,26 @@ tbody tr:nth-child(even) {
     background-color: var(--table-row-even);
 }
 
-/* Dark Mode Toggle Button */
-.mode-toggle {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    margin: 10px;
-    padding: 10px 15px;
-    background-color: var(--button-background);
-    color: var(--button-text-color);
-    border: none;
+/* Table header indicators for sorting */
+th {
     cursor: pointer;
-    border-radius: 5px;
-    z-index: 1000;
-    transition: background-color 0.3s ease;
+    position: relative;
 }
 
-.mode-toggle:hover {
-    background-color: var(--button-hover);
+th.sort-asc::after {
+    content: "↑";
+    position: absolute;
+    right: 10px;
+    font-size: 0.8em;
+    color: var(--text-color);
+}
+
+th.sort-desc::after {
+    content: "↓";
+    position: absolute;
+    right: 10px;
+    font-size: 0.8em;
+    color: var(--text-color);
 }
 
 /* Circular athlete profile images */
@@ -181,49 +185,10 @@ img {
     color: #333;
 }
 
-/* Reduced motion: Disable animations if the user prefers reduced motion */
+/* Reduced motion for accessibility */
 @media (prefers-reduced-motion: reduce) {
     * {
         animation: none !important;
         transition: none !important;
     }
-}
-
-/* Link styling specific to dark mode */
-body.dark-mode a {
-    color: var(--link-color);
-}
-
-body.dark-mode a:visited {
-    color: var(--link-visited-color);
-}
-
-body.dark-mode a:hover {
-    color: var(--link-hover-color); /* Use hover color in dark mode */
-}
-
-body.dark-mode a:active {
-    color: var(--link-active-color);
-}
-
-/* Table header indicators for sorting */
-th {
-    cursor: pointer;
-    position: relative;
-}
-
-th.sort-asc::after {
-    content: "↑";
-    position: absolute;
-    right: 10px;
-    font-size: 0.8em;
-    color: var(--text-color);
-}
-
-th.sort-desc::after {
-    content: "↓";
-    position: absolute;
-    right: 10px;
-    font-size: 0.8em;
-    color: var(--text-color);
 }
